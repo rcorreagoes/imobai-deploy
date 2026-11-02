@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  # 1. Motor de Machine Learning (FastAPI)
+  engine:
+    build:
+      context: ./imobia-engine
+      dockerfile: Dockerfile
+    container_name: imobai-engine
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    restart: unless-stopped
+
+  # 2. Backend Principal (NestJS)
+  backend:
+    build:
+      context: ./imobia-backend
+      dockerfile: Dockerfile
+    container_name: imobai-backend
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      PYTHON_ML_URL: http://engine:8000
+    depends_on:
+      - engine
+    restart: unless-stopped
+
+  # 3. Frontend (Angular servido por Nginx)
+  frontend:
+    build:
+      context: ./imobia-frontend
+      dockerfile: Dockerfile
+    container_name: imobai-frontend
+    ports:
+      - "8080:4000"
+    environment:
+      PORT: 4000
+      NODE_ENV: production
+    depends_on:
+      - backend
+    restart: unless-stopped
