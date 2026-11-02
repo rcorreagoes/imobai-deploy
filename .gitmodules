@@ -1,0 +1,9 @@
+[submodule "imobia-engine"]
+	path = imobia-engine
+	url = https://github.com/rcorreagoes/imobia-engine.git
+[submodule "imobia-backend"]
+	path = imobia-backend
+	url = https://github.com/rcorreagoes/imobia-backend.git
+[submodule "imobia-frontend"]
+	path = imobia-frontend
+	url = https://github.com/rcorreagoes/imobia-frontend.git
